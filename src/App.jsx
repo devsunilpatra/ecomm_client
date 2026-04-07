@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import PageSkeleton from "./components/ui/loadingSkeleton/PageSkeleton";
-import Container from "./components/Container";
+import Container from "./components/layout/Container";
 import Navbar from "./components/layout/Navbar/Navbar";
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));

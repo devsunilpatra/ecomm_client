@@ -14,7 +14,7 @@ const ProfileDropdown = ({ onLogout }) => {
     >
       <ul className="py-2 text-sm text-gray-700">
         {PROFILE_ITEMS.map((item) => {
-          // ✅ Handle logout separately
+          // Handle logout separately
           if (item.action === "logout") {
             return (
               <li key={item.label}>
@@ -29,7 +29,7 @@ const ProfileDropdown = ({ onLogout }) => {
             );
           }
 
-          // ✅ Navigation items
+          // Navigation items
           return (
             <li key={item.path}>
               <NavLink
@@ -54,21 +54,3 @@ const ProfileDropdown = ({ onLogout }) => {
 };
 
 export default ProfileDropdown;
-
-
-
-
-
-
-
-// const ProfileDropdown = () => {
-//   return (
-//     <ul className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-//       <li className="cursor-pointer hover:text-black">My Profile</li>
-//       <li className="cursor-pointer hover:text-black">Orders</li>
-//       <li className="cursor-pointer hover:text-black">Logout</li>
-//     </ul>
-//   );
-// };
-
-// export default ProfileDropdown;
