@@ -1,9 +1,9 @@
-import React from 'react'
-
-const Container = ({children}) => {
+const Container = ({ children }) => {
   return (
-    <div className='className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]"'>{children}</div>
-  )
-}
+    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+      {children}
+    </div>
+  );
+};
 
-export default Container
+export default Container;
