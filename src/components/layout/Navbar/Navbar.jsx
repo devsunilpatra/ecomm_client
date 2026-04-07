@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { assets } from "../../../assets/assets";
-import Profile from "./ProfileDropdown";
+import ProfileDropdown from "./ProfileDropdown";
 import NavItems from "./NavItems";
 import MobileMenu from "./MobileMenu";
 
@@ -33,7 +33,7 @@ const Navbar = () => {
             />
 
             <div className="group-hover:block hidden absolute right-0 dropdown-menu pt-4">
-              <Profile />
+              <ProfileDropdown />
             </div>
           </div>
 
