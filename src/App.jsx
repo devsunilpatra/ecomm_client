@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import PageSkeleton from "./components/ui/loadingSkeleton/PageSkeleton";
 import Container from "./components/layout/Container";
 import Navbar from "./components/layout/Navbar/Navbar";
+
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Collection = lazy(() => import("./pages/Collection"));
@@ -12,6 +13,8 @@ const About = lazy(() => import("./pages/About"));
 const Cart = lazy(() => import("./pages/Cart"));
 const PlaceOrder = lazy(() => import("./pages/PlaceOrder"));
 const Orders = lazy(() => import("./pages/Orders"));
+
+
 
 function App() {
   return (
@@ -36,3 +39,11 @@ function App() {
   );
 }
 export default App;
+
+
+
+
+
+
+
+

@@ -32,7 +32,7 @@ const Hero = () => {
           alt="hero img"
           className="w-full"
           loading="eager"
-          fetchpriority="high"
+          fetchPriority="high"
         />
       </picture>
     </section>
