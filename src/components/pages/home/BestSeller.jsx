@@ -3,11 +3,11 @@ import { ShopContext } from "../../../context/ShopContext";
 import Title from "../../ui/Title";
 import ProductCard from "../../ui/ProductCard";
 
-const LatestCollection = () => {
+const BestSeller = () => {
   const { products = [] } = useContext(ShopContext);
 
   const latestProduct = useMemo(() => {
-    return products.slice(0, 10);
+    return products.slice(0, 5);
   }, [products]);
 
   console.log(latestProduct);
@@ -22,10 +22,10 @@ const LatestCollection = () => {
   return (
     <section className="my-10">
       <div className="py-8 text-center text-3xl">
-        <Title normal_txt="LATEST" bold_txt="COLLECTION" />
+        <Title normal_txt="BEST" bold_txt="SELLER" />
         <p className="w-3/4 m-auto text-gray-700 text-xs sm:text-sm md:text-base">
-          Discover the latest collection featuring modern designs, premium
-          quality, and timeless style for every occasion.
+          Explore our latest collection with modern designs, premium quality,
+          and timeless style.
         </p>
       </div>
 
@@ -39,4 +39,4 @@ const LatestCollection = () => {
   );
 };
 
-export default LatestCollection;
+export default BestSeller;
