@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { assets } from "../../../assets/assets";
 import ProfileDropdown from "./ProfileDropdown";
 import NavItems from "./NavItems";
 import MobileMenu from "./MobileMenu";
+import { ShopContext } from "../../../context/ShopContext";
 
 const Navbar = () => {
+  const { setShowSearch } = useContext(ShopContext);
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -13,7 +15,7 @@ const Navbar = () => {
       <nav className="flex justify-between items-center py-5 font-medium">
         {/* Logo */}
         <Link to="/">
-          <img src={assets?.logo} alt="Leecart logo" className="w-36" />
+          <img src={assets?.logo} alt="Leecart logo" className="w-30" />
         </Link>
 
         <NavItems />
@@ -23,6 +25,7 @@ const Navbar = () => {
             src={assets?.search_icon}
             alt="serach icon"
             className="w-5 cursor-pointer"
+            onClick={() => setShowSearch((prev) => !prev)}
           />
 
           <div className="group relative">

@@ -4,6 +4,7 @@ import PageSkeleton from "./components/ui/loadingSkeleton/PageSkeleton";
 import Container from "./components/layout/Container";
 import Navbar from "./components/layout/Navbar/Navbar";
 import Footer from "./components/layout/Footer";
+import SearchBar from "./components/ui/SearchBar";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -19,6 +20,7 @@ function App() {
   return (
     <Container>
       <Navbar />
+      <SearchBar/>
       <Suspense fallback={<PageSkeleton />}>
         <Routes>
           <Route path="/" element={<Home />} />
