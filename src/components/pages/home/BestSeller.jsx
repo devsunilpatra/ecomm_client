@@ -7,7 +7,7 @@ const BestSeller = () => {
   const { products = [] } = useContext(ShopContext);
 
   const latestProduct = useMemo(() => {
-    return products.slice(0, 5);
+    return products.filter((item)=>item.bestseller).slice(0, 5);
   }, [products]);
 
   console.log(latestProduct);

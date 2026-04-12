@@ -4,6 +4,8 @@ const LatestCollection = lazy(
   () => import("../components/pages/home/LatestCollection"),
 );
 const BestSeller = lazy(() => import("../components/pages/home/BestSeller"));
+import OurPolicy from "../components/pages/home/OurPolicy";
+import NewsletterBox from "../components/common/NewsletterBox";
 
 const Home = () => {
   return (
@@ -15,6 +17,8 @@ const Home = () => {
       <Suspense fallback={<p>Loading...</p>}>
         <BestSeller />
       </Suspense>
+      <OurPolicy />
+      <NewsletterBox />
     </main>
   );
 };
