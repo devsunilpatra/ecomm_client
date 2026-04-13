@@ -20,7 +20,7 @@ function App() {
   return (
     <Container>
       <Navbar />
-      <SearchBar/>
+      <SearchBar />
       <Suspense fallback={<PageSkeleton />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -34,8 +34,10 @@ function App() {
           <Route path="/order" element={<Orders />} />
         </Routes>
       </Suspense>
+
       <Footer />
     </Container>
   );
 }
 export default App;
+

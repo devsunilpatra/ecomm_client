@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Title from "../components/ui/Title";
 import NewsletterBox from "../components/common/NewsletterBox";
+import { Button } from "../components/ui/Button";
 import { assets } from "../assets/assets";
 
 const Contact = () => {
@@ -31,9 +32,11 @@ const Contact = () => {
             CAREERS AT FOREVER
           </h3>
 
-          <p className="text-gray-500">Learn more our teams and job openings.</p>
+          <p className="text-gray-500">
+            Learn more our teams and job openings.
+          </p>
 
-          <button className="border px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500 cursor-pointer">Expolre Jobs</button>
+          <Button>Expolre Jobs</Button>
         </div>
       </section>
       <NewsletterBox />
