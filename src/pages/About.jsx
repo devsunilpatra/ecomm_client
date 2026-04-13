@@ -4,7 +4,7 @@ import Title from "../components/ui/Title";
 const About = () => {
   return (
     <main>
-      <div className="text-2xl text-center pt-8 border-t border-gray-300">
+      <div className="text-2xl text-center pt-12 border-t border-gray-300">
         <Title normal_txt="ABOUT" bold_txt="US" />
       </div>
 
