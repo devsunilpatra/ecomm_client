@@ -15,7 +15,7 @@ const Navbar = () => {
       <nav className="flex justify-between items-center py-5 font-medium">
         {/* Logo */}
         <Link to="/">
-          <img src={assets?.logo} alt="Leecart logo" className="w-30" />
+          <img src={assets?.logo} alt="Leecart logo" className="w-36" />
         </Link>
 
         <NavItems />
