@@ -9,7 +9,7 @@ const Orders = () => {
 
   return (
     <main className="pt-16 border-t border-gray-400">
-      <div className="text-2xl ">
+      <div className="text-2xl">
         <Title normal_txt="MY" bold_txt="ORDERS" />
       </div>
 
