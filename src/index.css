@@ -3,8 +3,14 @@
 @import "tailwindcss";
 
 
+
 *{
     font-family: "Outfit";
+}
+
+
+::-webkit-scrollbar{
+  display: none;
 }
 
 .prata-regular {

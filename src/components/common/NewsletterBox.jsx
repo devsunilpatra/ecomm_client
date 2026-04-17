@@ -1,3 +1,4 @@
+
 const NewsletterBox = () => {
   const submitHandler = (e) => {
     e.preventDefault();
