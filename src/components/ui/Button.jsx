@@ -1,4 +1,3 @@
-// components/Button.jsx
 import clsx from "clsx";
 
 export const Button = ({
@@ -11,14 +10,11 @@ export const Button = ({
     "px-8 py-2 text-sm transition-all duration-500 cursor-pointer border";
 
   const variants = {
-    outline:
-      "border-black text-black hover:bg-black hover:text-white",
+    outline: "border-black text-black hover:bg-black hover:text-white",
 
-    solid:
-      "bg-black text-white border-black hover:bg-white hover:text-black",
+    solid: "bg-black text-white border-black hover:bg-white hover:text-black",
 
-    ghost:
-      "border-transparent text-black hover:bg-gray-100",
+    ghost: "border-transparent text-black hover:bg-gray-100",
 
     inverted:
       "bg-white text-black border-black hover:bg-black hover:text-white",
