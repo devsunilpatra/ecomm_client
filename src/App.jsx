@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { ToastContainer } from "react-toastify";
 import PageSkeleton from "./components/ui/loadingSkeleton/PageSkeleton";
-import Container from "./components/layout/Container";
-import Navbar from "./components/layout/Navbar/Navbar";
-import Footer from "./components/layout/Footer";
+import Container from "./components/common/Container";
+import Navbar from "./components/common/Navbar/Navbar";
+import Footer from "./components/common/Footer";
 import SearchBar from "./components/ui/SearchBar";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -16,10 +17,14 @@ const Cart = lazy(() => import("./pages/Cart"));
 const PlaceOrder = lazy(() => import("./pages/PlaceOrder"));
 const Orders = lazy(() => import("./pages/Orders"));
 
+
+
+
 function App() {
   return (
     <Container>
       <Navbar />
+      <ToastContainer />
       <SearchBar />
       <Suspense fallback={<PageSkeleton />}>
         <Routes>

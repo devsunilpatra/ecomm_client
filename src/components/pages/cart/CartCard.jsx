@@ -1,7 +1,7 @@
 import { assets } from "../../../assets/assets";
 
-const CartCard = ({ prod, currency }) => {
-  const { name, price, image } = prod;
+const CartCard = ({ prod, currency, size, quantity, updateQuantity }) => {
+  const { _id, name, price, image } = prod;
 
   const truncate = (str, maxLength) => {
     if (str.length <= maxLength) return str;
@@ -24,7 +24,7 @@ const CartCard = ({ prod, currency }) => {
             <p>
               Size:{" "}
               <select name="" id="" className="border border-gray-500">
-                <option value="">M</option>
+                <option value="">{size}</option>
               </select>{" "}
             </p>
           </div>
@@ -36,13 +36,15 @@ const CartCard = ({ prod, currency }) => {
       <input
         type="number"
         min="1"
+        onChange={(e)=>e.target.value === "" || e.target.value === "0" ? null : updateQuantity(_id, size, Number(e.target.value))}
+        value={quantity}
         placeholder="1"
         className="px-2 w-12 md:w-20 text-sm border border-gray-400"
       />
 
       {/* button track order */}
 
-      <div className="cursor-pointer ">
+      <div onClick={()=>updateQuantity(_id, size, 0)} className="cursor-pointer">
         <img src={assets?.bin_icon} alt="bin icon" className="w-5 " />
       </div>
     </div>
