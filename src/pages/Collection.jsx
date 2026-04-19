@@ -1,82 +1,28 @@
-import { useContext, useState, useEffect } from "react";
+import {  useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setProducts } from "../features/products/productSlice";
 import { ShopContext } from "../context/ShopContext";
+import { selectFilteredProducts } from "../features/products/productSelectors";
 import Filter from "../components/pages/collection/Filter";
 import SortBox from "../components/pages/collection/SortBox";
 import Title from "../components/ui/Title";
 import ProductCard from "../components/ui/ProductCard";
+import { products as dummyProducts } from "../assets/assets";
 
 const Collection = () => {
-  const { products, search, showSearch } = useContext(ShopContext);
+  const dispatch = useDispatch();
+  
+  // const { products, search, showSearch } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(true);
-  const [filterProducts, setFilterProducts] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [subCategory, setSubCategory] = useState([]);
-  const [sortType, setSortType] = useState("relevant");
 
-  const toggleCategory = (e) => {
-    if (category.includes(e.target.value)) {
-      setCategory((prev) => prev.filter((item) => item !== e.target.value));
-    } else {
-      setCategory((prev) => [...prev, e.target.value]);
-    }
-  };
+  const filteredProducts = useSelector(selectFilteredProducts);
 
-  const toggleSubCategory = (e) => {
-    if (subCategory.includes(e.target.value)) {
-      setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
-    } else {
-      setSubCategory((prev) => [...prev, e.target.value]);
-    }
-  };
+   useEffect(() => {
+    dispatch(setProducts(dummyProducts));
+  }, [dispatch]);
 
-  const handelApplyFilter = () => {
-    let productCopy = products.slice();
-
-    if (showSearch && search) {
-      productCopy = productCopy.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()),
-      );
-    }
-
-    if (category.length > 0) {
-      productCopy = productCopy.filter((item) =>
-        category.includes(item.category),
-      );
-    }
-
-    if (subCategory.length > 0) {
-      productCopy = productCopy.filter((item) =>
-        subCategory.includes(item.subCategory),
-      );
-    }
-
-    setFilterProducts(productCopy);
-  };
-
-  const handleSortedProducts = () => {
-    let fpCopy = filterProducts.slice();
-
-    switch (sortType) {
-      case "low-high":
-        setFilterProducts(fpCopy.sort((a, b) => a.price - b.price));
-        break;
-
-      case "high-low":
-        setFilterProducts(fpCopy.sort((a, b) => b.price - a.price));
-        break;
-
-      default:
-        handelApplyFilter();
-    }
-  };
-
-  useEffect(() => {
-    handelApplyFilter();
-  }, [category, subCategory, search, showSearch]);
-
-  useEffect(() => {
-    handleSortedProducts();
-  }, [sortType]);
-
+  console.log(filteredProducts, "filteredProducts")
+ 
   return (
     <main className="flex flex-col sm:flex-row gap-8 pt-10 border-t border-gray-300">
       {/* Filter Options */}
@@ -84,8 +30,6 @@ const Collection = () => {
         <Filter
           showFilter={showFilter}
           setShowFilter={setShowFilter}
-          toggleCategory={toggleCategory}
-          toggleSubCategory={toggleSubCategory}
         />
       </div>
 
@@ -95,14 +39,15 @@ const Collection = () => {
           <Title normal_txt="ALL" bold_txt="COLLECTIONS" />
 
           {/* price sorting */}
-          <SortBox setSortType={setSortType} />
+          <SortBox  />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-5">
-          {filterProducts?.map((item) => {
+        {filteredProducts.length? <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-5">
+          { filteredProducts?.map((item) => {
             return <ProductCard key={item._id} item={item} />;
           })}
-        </div>
+        </div> : <div className="flex justify-center items-center min-h-48 text-2xl">No products found</div>}
+
       </div>
     </main>
   );

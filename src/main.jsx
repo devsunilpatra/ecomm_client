@@ -4,12 +4,16 @@ import "./index.css";
 import App from "./App.jsx";
 import ShopContextProvider from "./context/ShopContext";
 import { LenisProvider } from "./providers/LenisProvider";
+import { store } from "./store/store.js";
+import { Provider } from "react-redux";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ShopContextProvider>
       <LenisProvider>
-      <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </LenisProvider>
     </ShopContextProvider>
   </BrowserRouter>,

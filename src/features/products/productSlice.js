@@ -1,0 +1,73 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  products: [],
+  filters: {
+    category: [],
+    subCategory: [],
+    sortType: "relevant",
+    search: "",
+    showSearch: false,
+  },
+};
+
+const productSlice = createSlice({
+  name: "products",
+  initialState,
+  reducers: {
+    setProducts: (state, action) => {
+      state.products = action.payload;
+    },
+    toggleCategory: (state, action) => {
+      const value = action.payload;
+
+      if (state.filters.category.includes(value)) {
+        state.filters.category = state.filters.category.filter(
+          (item) => item !== value,
+        );
+      } else {
+        state.filters.category.push(value);
+      }
+    },
+    toggleSubCategory: (state, action) => {
+      const value = action.payload;
+
+      if (state.filters.subCategory.includes(value)) {
+        state.filters.subCategory = state.filters.subCategory.filter(
+          (item) => item !== value,
+        );
+      } else {
+        state.filters.subCategory.push(value);
+      }
+    },
+    setSortType: (state, action) => {
+      state.filters.sortType = action.payload;
+    },
+    setSearch: (state, action) => {
+      state.filters.search = action.payload;
+    },
+    setShowSearch: (state, action) => {
+      state.filters.showSearch = action.payload;
+    },
+    clearFilters: (state) => {
+      state.filters = {
+        category: [],
+        subCategory: [],
+        sortType: "relevant",
+        search: "",
+        showSearch: false,
+      };
+    },
+  },
+});
+
+export const {
+  setProducts,
+  toggleCategory,
+  toggleSubCategory,
+  setSortType,
+  setSearch,
+  setShowSearch,
+} = productSlice.actions;
+
+export default productSlice.reducer;

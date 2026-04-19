@@ -5,9 +5,13 @@ import ProfileDropdown from "./ProfileDropdown";
 import NavItems from "./NavItems";
 import MobileMenu from "./MobileMenu";
 import { ShopContext } from "../../../context/ShopContext";
+import { useDispatch } from "react-redux";
+import { setShowSearch } from "../../../features/products/productSlice";
 
 const Navbar = () => {
-  const { setShowSearch, getCartCount } = useContext(ShopContext);
+  const dispatch = useDispatch();
+
+  const { getCartCount } = useContext(ShopContext);
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -25,7 +29,7 @@ const Navbar = () => {
             src={assets?.search_icon}
             alt="serach icon"
             className="w-5 cursor-pointer"
-            onClick={() => setShowSearch((prev) => !prev)}
+            onClick={() => dispatch(setShowSearch((prev) => !prev))}
           />
 
           <div className="group relative">

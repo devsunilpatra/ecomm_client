@@ -1,12 +1,30 @@
-const SortBox = ({ setSortType }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setSortType } from "../../../features/products/productSlice";
+
+const sortData = [
+  { label: "Sort by: Relavant", value: "relevant" },
+  { label: "Sort by: Low to High", value: "low-high" },
+  { label: "Sort by: High to Low", value: "high-low" },
+];
+
+const SortBox = () => {
+  const dispatch = useDispatch();
+  const sortType = useSelector((state) => state.products.filters.sortType);
+
   return (
     <select
-      onChange={(e) => setSortType(e.target.value)}
+      value={sortType}
+      onChange={(e) => dispatch(setSortType(e.target.value))}
       className="border border-gray-300 text-sm px-2"
     >
-      <option value="relevant"> Sort by: Relavant</option>
-      <option value="low-high">Sort by: Low to High</option>
-      <option value="high-low">Sort by: High to Low</option>
+      {sortData?.map((sort) => {
+        return (
+          <option key={sort?.label} value={sort?.value}>
+            {" "}
+            {sort?.label}
+          </option>
+        );
+      })}
     </select>
   );
 };

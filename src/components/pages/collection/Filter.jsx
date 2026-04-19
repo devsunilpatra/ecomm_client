@@ -1,11 +1,26 @@
 import { assets } from "../../../assets/assets";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleCategory, toggleSubCategory } from "../../../features/products/productSlice";
+
+const categories = [
+  { value: "Men", label: "Men" },
+  { value: "Women", label: "Women" },
+  { value: "Kids", label: "Kids" },
+];
+const subCategories = [
+  { value: "Topwear", label: "Topwear" },
+  { value: "Bottomwear", label: "Bottomwear" },
+  { value: "Winterwear", label: "Winterwear" },
+];
 
 const Filter = ({
   showFilter,
-  setShowFilter,
-  toggleCategory,
-  toggleSubCategory,
+  setShowFilter
 }) => {
+  const dispatch = useDispatch();
+  const {category, subCategory} = useSelector((state) => state.products.filters);
+
+  
   return (
     <section>
       <p
@@ -26,33 +41,20 @@ const Filter = ({
       >
         <p className="mb-3 text-sm font-medium ">CATEGORIES</p>
         <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-          <p className="flex gap-2">
-            <input
-              type="checkbox"
-              value={"Men"}
-              onChange={toggleCategory}
-              className="w-3"
-            />{" "}
-            Men
-          </p>
-          <p className="flex gap-2">
-            <input
-              type="checkbox"
-              value={"Women"}
-              onChange={toggleCategory}
-              className="w-3"
-            />
-            Women
-          </p>
-          <p className="flex gap-2">
-            <input
-              type="checkbox"
-              value={"Kids"}
-              onChange={toggleCategory}
-              className="w-3"
-            />
-            Kids
-          </p>
+          {categories?.map((catg) => {
+            return (
+              <label className="flex gap-2" key={catg?.label}>
+                <input
+                  type="checkbox"
+                  value={catg?.value}
+                  checked={category.includes(catg.value)}
+                  onChange={()=>dispatch(toggleCategory(catg.value))}
+                  className="w-3"
+                />{" "}
+                {catg?.label}
+              </label>
+            );
+          })}
         </div>
       </div>
 
@@ -62,36 +64,19 @@ const Filter = ({
       >
         <p className="mb-3 text-sm font-medium ">TYPE</p>
         <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-          <p className="flex gap-2">
+          {subCategories?.map((subCatg)=>{
+            return  <label className="flex gap-2" key={subCatg?.label}>
             <input
               type="checkbox"
-              name=""
-              value={"Topwear"}
-              onChange={toggleSubCategory}
+              value={subCatg?.value}
+              checked={subCategory.includes(subCatg.value)}
+              onChange={()=>dispatch(toggleSubCategory(subCatg.value))}
               className="w-3"
             />{" "}
-            Topwear
-          </p>
-          <p className="flex gap-2">
-            <input
-              type="checkbox"
-              name=""
-              value={"Bottomwear"}
-              onChange={toggleSubCategory}
-              className="w-3"
-            />
-            Bottomwear
-          </p>
-          <p className="flex gap-2">
-            <input
-              type="checkbox"
-              name=""
-              value={"Winterwear"}
-              onChange={toggleSubCategory}
-              className="w-3"
-            />
-            Winterwear
-          </p>
+            {subCatg?.label}
+          </label>
+          })}
+          
         </div>
       </div>
     </section>
@@ -100,86 +85,3 @@ const Filter = ({
 
 export default Filter;
 
-// import React, { useState } from "react";
-
-// // Config-driven filters
-// const FILTER_CONFIG = [
-//   {
-//     title: "Categories",
-//     key: "category",
-//     options: ["Men", "Women", "Kids"],
-//   },
-//   {
-//     title: "Type",
-//     key: "type",
-//     options: ["Topwear", "Bottomwear", "Winterwear"],
-//   },
-// ];
-
-// const Filter = ({ showFilter }) => {
-//   const [selectedFilters, setSelectedFilters] = useState({});
-
-//   const handleChange = (key, value) => {
-//     setSelectedFilters((prev) => {
-//       const prevValues = prev[key] || [];
-
-//       const updatedValues = prevValues.includes(value)
-//         ? prevValues.filter((v) => v !== value)
-//         : [...prevValues, value];
-
-//       return {
-//         ...prev,
-//         [key]: updatedValues,
-//       };
-//     });
-//   };
-
-//   return (
-//     <section className="w-full">
-//       <p className="my-3 text-lg font-semibold flex items-center gap-2 cursor-pointer">
-//         FILTERS
-//       </p>
-
-//       {FILTER_CONFIG.map((filter) => (
-//         <div
-//           key={filter.key}
-//           className={`border border-gray-200 rounded-lg px-4 py-4 mt-5 shadow-sm transition ${
-//             showFilter ? "block" : "hidden"
-//           }`}
-//         >
-//           <p className="mb-3 text-sm font-semibold text-gray-800 uppercase tracking-wide">
-//             {filter.title}
-//           </p>
-
-//           <div className="flex flex-col gap-2 text-sm text-gray-600">
-//             {filter.options.map((option, index) => {
-//               const id = `${filter.key}-${index}`;
-
-//               return (
-//                 <label
-//                   key={option}
-//                   htmlFor={id}
-//                   className="flex items-center gap-2 cursor-pointer hover:text-black transition"
-//                 >
-//                   <input
-//                     id={id}
-//                     type="checkbox"
-//                     value={option}
-//                     checked={
-//                       selectedFilters[filter.key]?.includes(option) || false
-//                     }
-//                     onChange={() => handleChange(filter.key, option)}
-//                     className="accent-black w-4 h-4 cursor-pointer"
-//                   />
-//                   {option}
-//                 </label>
-//               );
-//             })}
-//           </div>
-//         </div>
-//       ))}
-//     </section>
-//   );
-// };
-
-// export default Filter;
