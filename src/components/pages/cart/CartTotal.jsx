@@ -1,16 +1,18 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ShopContext } from "../../../context/ShopContext";
 import Title from "../../ui/Title";
 import { Button } from "../../ui/Button";
+import { selectCartTotal } from "../../../features/cart/cartSelectors";
 
 const CartTotal = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location, "location");
-  const { currency, delivery_fee, getCartAmount } = useContext(ShopContext);
 
-  console.log(getCartAmount, "getCartAmount");
+  const cartTotal = useSelector(selectCartTotal);
+
+  const { currency, delivery_fee } = useContext(ShopContext);
 
   return (
     <section className="w-xl">
@@ -23,7 +25,7 @@ const CartTotal = () => {
           <p>Subtotal</p>
           <p>
             {currency}
-            {getCartAmount()}.00
+            {cartTotal}.00
           </p>
         </div>
         <hr />
@@ -39,7 +41,7 @@ const CartTotal = () => {
           <b>Total</b>
           <b>
             {currency}
-            {getCartAmount() === 0 ? 0 : getCartAmount() + Number(delivery_fee)}
+            {cartTotal === 0 ? 0 : cartTotal + Number(delivery_fee)}
           </b>
         </div>
       </div>

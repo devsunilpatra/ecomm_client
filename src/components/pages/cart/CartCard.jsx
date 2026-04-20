@@ -1,12 +1,39 @@
 import { assets } from "../../../assets/assets";
+import { useDispatch } from "react-redux";
+import { updateQuantity, removeCart } from "../../../features/cart/cartSlice";
 
-const CartCard = ({ prod, currency, size, quantity, updateQuantity }) => {
+const CartCard = ({ prod, currency, size, quantity }) => {
   const { _id, name, price, image } = prod;
+
+  const dispatch = useDispatch();
 
   const truncate = (str, maxLength) => {
     if (str.length <= maxLength) return str;
 
     return str.slice(0, maxLength) + "...";
+  };
+
+  const handleChange = (e) => {
+    const value = Number(e.target.value);
+
+    if (value < 1) return;
+
+    dispatch(
+      updateQuantity({
+        _id: _id,
+        size,
+        quantity: value,
+      }),
+    );
+  };
+
+  const handleRemove = () => {
+    dispatch(
+      removeCart({
+        _id: _id,
+        size,
+      }),
+    );
   };
 
   return (
@@ -33,18 +60,18 @@ const CartCard = ({ prod, currency, size, quantity, updateQuantity }) => {
 
       {/* order status */}
 
+      {/* Quantity Input */}
       <input
         type="number"
         min="1"
-        onChange={(e)=>e.target.value === "" || e.target.value === "0" ? null : updateQuantity(_id, size, Number(e.target.value))}
         value={quantity}
-        placeholder="1"
-        className="px-2 w-12 md:w-20 text-sm border border-gray-400"
+        onChange={handleChange} 
+        className="px-2 w-16 text-center border border-gray-400"
       />
 
       {/* button track order */}
 
-      <div onClick={()=>updateQuantity(_id, size, 0)} className="cursor-pointer">
+      <div onClick={handleRemove} className="cursor-pointer">
         <img src={assets?.bin_icon} alt="bin icon" className="w-5 " />
       </div>
     </div>

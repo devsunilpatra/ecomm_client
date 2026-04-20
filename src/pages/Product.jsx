@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../features/cart/cartSlice";
 
 // import ProductGaller from "../components/pages/products/ProductGaller";
 import RelatedProducts from "../components/pages/products/RelatedProducts";
@@ -10,7 +12,8 @@ import { assets } from "../assets/assets";
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency, addToCart } = useContext(ShopContext);
+  const { products, currency } = useContext(ShopContext);
+  const dispatch = useDispatch();
   const [productData, setProductData] = useState({});
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
@@ -30,6 +33,10 @@ const Product = () => {
 
   //  console.log([productData.image[0]], "products")
   console.log(productData, "productData");
+ 
+  const cartItems = useSelector((state)=>state.cart)
+
+  console.log(cartItems, "cartItems")
 
   return productData ? (
     <main className="border-t border-gray-400 pt-10 transition-opacity ease-in duration-500 opacity-100">
@@ -101,7 +108,19 @@ const Product = () => {
             </div>
           </div>
 
-          <button onClick={()=>addToCart(productData?._id, size)} className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700 cursor-pointer">
+          <button
+            onClick={() =>
+              dispatch(
+                addToCart({
+                  _id: productData?._id,
+                  price: productData.price,
+                  title: productData.name,
+                  size:size,
+                }),
+              )
+            }
+            className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700 cursor-pointer"
+          >
             ADD TO CART
           </button>
 

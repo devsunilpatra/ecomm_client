@@ -1,17 +1,16 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { assets } from "../../../assets/assets";
 import ProfileDropdown from "./ProfileDropdown";
 import NavItems from "./NavItems";
 import MobileMenu from "./MobileMenu";
-import { ShopContext } from "../../../context/ShopContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setShowSearch } from "../../../features/products/productSlice";
+import { selectCartCount } from "../../../features/cart/cartSelectors";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-
-  const { getCartCount } = useContext(ShopContext);
+  const cartCount = useSelector(selectCartCount)
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -51,7 +50,7 @@ const Navbar = () => {
               className="w-5 cursor-pointer"
             />
             <p className="absolute -right-1.25 -bottom-1.25 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[9px]">
-              {getCartCount()}
+              {cartCount}
             </p>
           </Link>
 
