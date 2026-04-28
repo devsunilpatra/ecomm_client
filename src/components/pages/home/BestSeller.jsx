@@ -1,10 +1,14 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { ShopContext } from "../../../context/ShopContext";
 import Title from "../../ui/Title";
 import ProductCard from "../../ui/ProductCard";
+import { useSelector } from "react-redux";
 
 const BestSeller = () => {
-  const { products = [] } = useContext(ShopContext);
+  // const { products = [] } = useContext(ShopContext);
+
+  const {products} = useSelector(s=>s.products)
+
 
   const latestProduct = useMemo(() => {
     return products.filter((item)=>item.bestseller).slice(0, 5);

@@ -1,7 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../services/api";
 
+export const fetchProducts = createAsyncThunk(
+  "products/fetchedProducts",
+  async (_, thunkAPI) => {
+    try {
+      const res = await api.get("/products");
+      return res.data.products;
+    } catch (error) {
+      console.log(error)
+      return thunkAPI.rejectWithValue("Failed to fetch");
+    }
+  },
+);
 const initialState = {
   products: [],
+  loading: false,
+  error: null,
   filters: {
     category: [],
     subCategory: [],
@@ -58,6 +73,23 @@ const productSlice = createSlice({
         showSearch: false,
       };
     },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+      })
+
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 

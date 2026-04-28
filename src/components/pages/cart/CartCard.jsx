@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { updateQuantity, removeCart } from "../../../features/cart/cartSlice";
 
 const CartCard = ({ prod, currency, size, quantity }) => {
-  const { _id, name, price, image } = prod;
+  const { _id, name, price, images } = prod;
 
   const dispatch = useDispatch();
 
@@ -40,7 +40,7 @@ const CartCard = ({ prod, currency, size, quantity }) => {
     <div className="py-4 border-t border-gray-300 text-gray-700 flex flex-row justify-between items-center gap-4">
       {/* order details */}
       <div className="flex items-start gap-4 text-sm">
-        <img src={image[0]} alt={prod?.name} className="w-20 sm:w-20" />
+        <img src={images[0]} alt={name} className="w-20 sm:w-20" />
 
         <div className="flex flex-col justify-between max-w-44 ">
           <p className="sm:text-base font-medium">{truncate(name, 70)}</p>

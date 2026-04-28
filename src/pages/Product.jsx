@@ -3,7 +3,6 @@ import { ShopContext } from "../context/ShopContext";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
-
 // import ProductGaller from "../components/pages/products/ProductGaller";
 import RelatedProducts from "../components/pages/products/RelatedProducts";
 import NewsletterBox from "../components/common/NewsletterBox";
@@ -12,7 +11,9 @@ import { assets } from "../assets/assets";
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency } = useContext(ShopContext);
+ 
+  const {products} = useSelector(s=>s.products)
+  const { currency } = useContext(ShopContext);
   const dispatch = useDispatch();
   const [productData, setProductData] = useState({});
   const [image, setImage] = useState("");
@@ -21,7 +22,7 @@ const Product = () => {
     products?.map((item) => {
       if (item._id === productId) {
         setProductData(item);
-        setImage(item?.image[0]);
+        setImage(item?.images[0]);
         return null;
       }
     });
@@ -45,7 +46,7 @@ const Product = () => {
         {/* ---------Product Images------------ */}
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
           <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-between sm:w-[17.8%]">
-            {productData?.image?.map((img) => {
+            {productData?.images?.map((img) => {
               return (
                 <img
                   src={img}

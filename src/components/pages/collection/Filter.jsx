@@ -1,26 +1,27 @@
 import { assets } from "../../../assets/assets";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCategory, toggleSubCategory } from "../../../features/products/productSlice";
+import {
+  toggleCategory,
+  toggleSubCategory,
+} from "../../../features/products/productSlice";
 
 const categories = [
-  { value: "Men", label: "Men" },
-  { value: "Women", label: "Women" },
-  { value: "Kids", label: "Kids" },
+  { value: "men", label: "Men" },
+  { value: "women", label: "Women" },
+  { value: "kids", label: "Kids" },
 ];
 const subCategories = [
-  { value: "Topwear", label: "Topwear" },
-  { value: "Bottomwear", label: "Bottomwear" },
-  { value: "Winterwear", label: "Winterwear" },
+  { value: "topwear", label: "Topwear" },
+  { value: "bottomwear", label: "Bottomwear" },
+  { value: "winterwear", label: "Winterwear" },
 ];
 
-const Filter = ({
-  showFilter,
-  setShowFilter
-}) => {
+const Filter = ({ showFilter, setShowFilter }) => {
   const dispatch = useDispatch();
-  const {category, subCategory} = useSelector((state) => state.products.filters);
+  const { category, subCategory } = useSelector(
+    (state) => state.products.filters,
+  );
 
-  
   return (
     <section>
       <p
@@ -48,7 +49,7 @@ const Filter = ({
                   type="checkbox"
                   value={catg?.value}
                   checked={category.includes(catg.value)}
-                  onChange={()=>dispatch(toggleCategory(catg.value))}
+                  onChange={() => dispatch(toggleCategory(catg.value))}
                   className="w-3"
                 />{" "}
                 {catg?.label}
@@ -64,19 +65,20 @@ const Filter = ({
       >
         <p className="mb-3 text-sm font-medium ">TYPE</p>
         <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-          {subCategories?.map((subCatg)=>{
-            return  <label className="flex gap-2" key={subCatg?.label}>
-            <input
-              type="checkbox"
-              value={subCatg?.value}
-              checked={subCategory.includes(subCatg.value)}
-              onChange={()=>dispatch(toggleSubCategory(subCatg.value))}
-              className="w-3"
-            />{" "}
-            {subCatg?.label}
-          </label>
+          {subCategories?.map((subCatg) => {
+            return (
+              <label className="flex gap-2" key={subCatg?.label}>
+                <input
+                  type="checkbox"
+                  value={subCatg?.value}
+                  checked={subCategory.includes(subCatg.value)}
+                  onChange={() => dispatch(toggleSubCategory(subCatg.value))}
+                  className="w-3"
+                />{" "}
+                {subCatg?.label}
+              </label>
+            );
           })}
-          
         </div>
       </div>
     </section>
@@ -84,4 +86,3 @@ const Filter = ({
 };
 
 export default Filter;
-

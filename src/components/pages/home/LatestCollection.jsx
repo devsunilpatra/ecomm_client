@@ -1,10 +1,16 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { ShopContext } from "../../../context/ShopContext";
 import Title from "../../ui/Title";
 import ProductCard from "../../ui/ProductCard";
 
 const LatestCollection = () => {
-  const { products = [] } = useContext(ShopContext);
+
+  const products = useSelector(state=>state.products.products)
+
+  console.log(products, "products")
+   
+  // const { products = [] } = useContext(ShopContext);
 
   const latestProduct = useMemo(() => {
     return products.slice(0, 10);

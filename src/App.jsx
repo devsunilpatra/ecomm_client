@@ -1,11 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import PageSkeleton from "./components/ui/loadingSkeleton/PageSkeleton";
 import Container from "./components/common/Container";
 import Navbar from "./components/common/Navbar/Navbar";
 import Footer from "./components/common/Footer";
 import SearchBar from "./components/ui/SearchBar";
+import { fetchProducts } from "./features/products/productSlice";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -17,10 +19,13 @@ const Cart = lazy(() => import("./pages/Cart"));
 const PlaceOrder = lazy(() => import("./pages/PlaceOrder"));
 const Orders = lazy(() => import("./pages/Orders"));
 
-
-
-
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
   return (
     <Container>
       <Navbar />
@@ -45,4 +50,3 @@ function App() {
   );
 }
 export default App;
-

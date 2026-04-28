@@ -1,10 +1,10 @@
-import { useContext } from "react";
 import { ShopContext } from "../../../context/ShopContext";
 import Title from "../../ui/Title";
 import ProductCard from "../../ui/ProductCard";
+import { useSelector } from "react-redux";
 
 const RelatedProducts = () => {
-  const { products } = useContext(ShopContext);
+  const { products } = useSelector((s) => s.products);
 
   return (
     <section>
