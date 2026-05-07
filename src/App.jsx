@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import PageSkeleton from "./components/ui/loadingSkeleton/PageSkeleton";
@@ -8,6 +9,7 @@ import Navbar from "./components/common/Navbar/Navbar";
 import Footer from "./components/common/Footer";
 import SearchBar from "./components/ui/SearchBar";
 import { fetchProducts } from "./features/products/productSlice";
+import ProtectedRoute from "../routes/ProtectedRoute";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -33,15 +35,18 @@ function App() {
       <SearchBar />
       <Suspense fallback={<PageSkeleton />}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/collection" element={<Collection />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/product/:productId" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/place-order" element={<PlaceOrder />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/collection" element={<Collection />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/product/:productId" element={<Product />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/place-order" element={<PlaceOrder />} />
+            <Route path="/orders" element={<Orders />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Suspense>
 

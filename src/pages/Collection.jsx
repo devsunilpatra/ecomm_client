@@ -1,23 +1,16 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../features/products/productSlice";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { selectFilteredProducts } from "../features/products/productSelectors";
 import Filter from "../components/pages/collection/Filter";
 import SortBox from "../components/pages/collection/SortBox";
 import Title from "../components/ui/Title";
 import ProductCard from "../components/ui/ProductCard";
-// import { products as dummyProducts } from "../assets/assets";
-// import { fetchProducts } from "../features/products/productSlice";
 
 const ITEMS_PER_PAGE = 8;
 
 const Collection = () => {
-  // const dispatch = useDispatch();
   const [showFilter, setShowFilter] = useState(true);
   const filteredProducts = useSelector(selectFilteredProducts);
-
- 
-
 
   return (
     <main className="flex flex-col sm:flex-row gap-8 pt-10 border-t border-gray-300">

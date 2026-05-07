@@ -1,0 +1,31 @@
+name: Deploy on VPS
+
+
+on:
+   push:
+    branches:
+        - master
+        
+        
+
+jobs:
+  deploy:
+    runs-only: ubuntu-latest
+    
+    
+steps:
+  - name: Checkout Code
+    uses: actions/checkout@v4
+    
+
+
+- name: Deploy via SSH
+  uses: appleboy/ssh-action@1.0.3
+  with:
+    host: ${{secrests.SSH_HOST}}
+    username: ${{secrests.VPS_USER}}
+    key: ${{secrests.SSH_KEY}}
+    script: |
+       cd/root/express-docker
+       git pull
+       docker compose up -d -build

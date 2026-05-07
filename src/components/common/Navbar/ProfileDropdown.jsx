@@ -1,12 +1,22 @@
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "../../../features/auth/authSlice";
 import { NavLink } from "react-router-dom";
 
 const PROFILE_ITEMS = [
   { label: "My Profile", path: "/profile" },
   { label: "Orders", path: "/orders" },
-  { label: "Logout", path: "/login" },
+  { label: "Logout", action: "logout" }, 
 ];
 
-const ProfileDropdown = ({ onLogout }) => {
+const ProfileDropdown = () => {
+
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    dispatch(setAccessToken(null));
+  };
+
   return (
     <div
       className="mt-0 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
@@ -18,14 +28,14 @@ const ProfileDropdown = ({ onLogout }) => {
           if (item.action === "logout") {
             return (
               <li key={item.label}>
-                <NavLink
-                  // onClick={onLogout}
-                  to={item.path}
+                <div
+                  onClick={()=>handleLogout()}
+                  // to={item.path}
                   className="w-full text-left px-4 py-2 hover:bg-gray-100 hover:text-black transition"
                   role="menuitem"
                 >
                   {item.label}
-                </NavLink>
+                </div>
               </li>
             );
           }
@@ -55,11 +65,6 @@ const ProfileDropdown = ({ onLogout }) => {
 };
 
 export default ProfileDropdown;
-
-
-
-
-
 
 // return (
 //     <div

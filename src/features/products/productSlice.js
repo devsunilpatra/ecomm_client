@@ -8,7 +8,7 @@ export const fetchProducts = createAsyncThunk(
       const res = await api.get("/products");
       return res.data.products;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return thunkAPI.rejectWithValue("Failed to fetch");
     }
   },
@@ -35,14 +35,20 @@ const productSlice = createSlice({
     },
     toggleCategory: (state, action) => {
       const value = action.payload;
+      // const value = action.payload;
+      state.filters.category = state.filters.category.includes(value)
+        ? state.filters.category.filter((item) => {
+            item !== value;
+          })
+        : [...state.filters.category, value];
 
-      if (state.filters.category.includes(value)) {
-        state.filters.category = state.filters.category.filter(
-          (item) => item !== value,
-        );
-      } else {
-        state.filters.category.push(value);
-      }
+      // if (state.filters.category.includes(value)) {
+      //   state.filters.category = state.filters.category.filter(
+      //     (item) => item !== value,
+      //   );
+      // } else {
+      //   state.filters.category.push(value);
+      // }
     },
     toggleSubCategory: (state, action) => {
       const value = action.payload;
