@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { assets } from "../../assets/assets";
+import { assets } from "../../../assets/assets";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearch, setShowSearch } from "../../features/products/productSlice";
+import { setSearch, setShowSearch } from "../../../features/products/productSlice";
 
 const SearchBar = () => {
+  
   const dispatch = useDispatch();
   const { search, showSearch } = useSelector((state) => state.products.filters);
   const [localSearch, setLocalSearch] = useState(search);

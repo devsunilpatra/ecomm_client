@@ -1,54 +1,96 @@
 import axios from "axios";
+import { setAccessToken } from "../features/auth/authSlice";
+
+let store;
+
+export const injectStore = (_store) => {
+  store = _store;
+};
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
 });
 
-/* Attach access token */
-api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
+let isRefreshing = false;
+let failedQueue = [];
 
-  console.log(accessToken, "accessToken");
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((promise) => {
+    if (error) {
+      promise.reject(error);
+    } else {
+      promise.resolve(token);
+    }
+  });
 
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
+  failedQueue = [];
+};
+
+
+api.interceptors.request.use((config)=>{
+  const token = store.getState()?.auth?.accessToken;
+
+  if(token){
+    config.headers.Authorization = `Bearer ${token}`
   }
 
   return config;
-});
+})
 
-/* Auto refresh token */
 api.interceptors.response.use(
-  (res) => res,
+  (response) => response,
+
   async (error) => {
     const originalRequest = error.config;
 
-    // if access token expired
     if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        // wait until refresh finishes
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve,
+            reject,
+          });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+
+            return api(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
-        const res = await api.get(`/users/refresh`);
+        const res = await api.get("/users/refresh");
 
-        const newAccessToken = res.data.accessToken;
+        const accessToken = res.data.accessToken;
 
-        localStorage.setItem("accessToken", newAccessToken);
-        // store.dispatch(setAccessToken(res.data.accessToken));
+        store.dispatch(setAccessToken(accessToken));
 
-        originalRequest.headers.Authorization = `"Bearer ${newAccessToken}`;
+        // localStorage.setItem(
+        //   "accessToken",
+        //   accessToken
+        // );
+
+        processQueue(null, accessToken);
+
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
         return api(originalRequest);
       } catch (err) {
-        console.log("Refresh failed", err);
+        processQueue(err, null);
 
-        // remove invalid token
-        localStorage.removeItem("accessToken");
+        // store.dispatch(logout());
 
-        // optional redirect
         window.location.href = "/login";
 
         return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
       }
     }
 

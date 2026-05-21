@@ -6,7 +6,7 @@ import SortBox from "../components/pages/collection/SortBox";
 import Title from "../components/ui/Title";
 import ProductCard from "../components/ui/ProductCard";
 
-const ITEMS_PER_PAGE = 8;
+
 
 const Collection = () => {
   const [showFilter, setShowFilter] = useState(true);

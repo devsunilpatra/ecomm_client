@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser, registerUser } from "../features/auth/authSlice";
 import { useState } from "react";
@@ -14,10 +14,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  //   const { accessToken } = useSelector((s) => s.auth);
-
-  // console.log(accessToken, "accessToken");
 
   const [currentState, setCurrentState] = useState("Login");
 

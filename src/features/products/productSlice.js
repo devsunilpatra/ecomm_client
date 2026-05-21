@@ -41,14 +41,6 @@ const productSlice = createSlice({
             item !== value;
           })
         : [...state.filters.category, value];
-
-      // if (state.filters.category.includes(value)) {
-      //   state.filters.category = state.filters.category.filter(
-      //     (item) => item !== value,
-      //   );
-      // } else {
-      //   state.filters.category.push(value);
-      // }
     },
     toggleSubCategory: (state, action) => {
       const value = action.payload;
